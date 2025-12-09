@@ -43,6 +43,10 @@ const translations = {
                 title: "کلون صفحه اصلی دیجی‌کالا",
                 description: "بازطراحی واکنش‌گرا از صفحه اصلی دیجی‌کالا با Bootstrap برای تمرین ساختاردهی ماژولار و چینش محتوای پیچیده."
             },
+            panelModir: {
+                title: "پنل مدیر",
+                description: "پنل مدیریتی کامل برای مدیریت محصولات، سفارشات، کاربران و نظرات با رابط کاربری مدرن و واکنش‌گرا."
+            },
             next: {
                 title: "نمونه‌کار بعدی در راهه",
                 description: "به‌محض آماده شدن، پروژه‌ی بعدی رو هم اینجا اضافه می‌کنم تا به‌روزترین کارهام همیشه در دسترس باشه."
@@ -123,6 +127,10 @@ const translations = {
             digikala: {
                 title: "Digikala Homepage Clone",
                 description: "A responsive redesign of Digikala's homepage using Bootstrap, focusing on modular structure and complex content layout."
+            },
+            panelModir: {
+                title: "Manager Panel",
+                description: "A complete admin panel for managing products, orders, users, and comments with a modern and responsive user interface."
             },
             next: {
                 title: "Next Project Coming Soon",
