@@ -37,9 +37,6 @@
     <header class="navbar navbar-expand-lg fixed-top blur-bg">
         <div class="container">
             <a class="navbar-brand fw-semibold" href="#hero" aria-label="بازگشت به صفحه اصلی">Parsa Dehghani</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="تغییر منو">
-                <span class="navbar-toggler-icon" aria-hidden="true"></span>
-            </button>
             <nav class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto gap-lg-3 align-items-center">
                     <li class="nav-item"><a class="nav-link" href="#about" data-i18n="nav.about">درباره من</a></li>
@@ -49,11 +46,13 @@
                     <li class="nav-item">
                         <button class="btn btn-sm btn-outline-secondary theme-toggle" type="button" aria-label="تغییر تم" title="تغییر تم">
                             <i class="bi bi-moon-fill theme-icon" aria-hidden="true"></i>
+                            <span class="d-none">تغییر تم</span>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="btn btn-sm btn-outline-secondary lang-toggle" type="button" aria-label="تغییر زبان" title="تغییر زبان">
                             <i class="bi bi-translate lang-icon" aria-hidden="true"></i>
+                            <span class="d-none">تغییر زبان</span>
                         </button>
                     </li>
                 </ul>
