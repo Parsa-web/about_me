@@ -113,7 +113,7 @@ body::after {
 
 /* Smooth scroll with offset for fixed navbar */
 html {
-    scroll-padding-top: 80px;
+    scroll-padding-top: 100px;
 }
 
 /* Fade-in animation for sections */
@@ -149,6 +149,26 @@ section:not(.visible) {
 .navbar {
     background-color: rgba(248, 248, 255, 0.85);
     transition: backdrop-filter 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    padding: 1rem 0;
+    width: 100%;
+}
+
+.navbar .container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+}
+
+@media (min-width: 992px) {
+    .navbar .container {
+        max-width: 1140px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
 
 .navbar .navbar-brand {
@@ -351,6 +371,14 @@ section {
 
 .portfolio-card img {
     object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ensure images are responsive */
+img {
+    max-width: 100%;
+    height: auto;
 }
 
 .portfolio-card .card-title {
@@ -603,46 +631,801 @@ footer {
     transform: translateY(0);
 }
 
-/* Hide hamburger menu on desktop */
-.hamburger-menu-btn,
-.hamburger-menu-overlay {
+/* ============================================
+   RESPONSIVE DESIGN SYSTEM
+   ============================================ */
+
+/* Hamburger Menu Styles */
+.hamburger-menu-btn {
     display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1050;
+    position: relative;
 }
 
-@media (max-width: 992px) {
-    /* Show hamburger menu on mobile/tablet */
-    .hamburger-menu-btn,
+.hamburger-line {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-strong);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.hamburger-menu-btn.active .hamburger-line:nth-child(1) {
+    transform: translateY(10.5px) rotate(45deg);
+}
+
+.hamburger-menu-btn.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.hamburger-menu-btn.active .hamburger-line:nth-child(3) {
+    transform: translateY(-10.5px) rotate(-45deg);
+}
+
+.hamburger-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.hamburger-menu-overlay.active {
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.hamburger-menu-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 5rem 2rem 2rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.hamburger-close-btn {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(var(--bs-primary-rgb), 0.15);
+    border: 1px solid rgba(var(--bs-primary-rgb), 0.2);
+    color: var(--text-strong);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hamburger-close-btn:hover {
+    background: rgba(var(--bs-primary-rgb), 0.25);
+    transform: scale(1.05);
+}
+
+.hamburger-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hamburger-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.hamburger-nav-item {
+    width: 100%;
+}
+
+.hamburger-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-strong);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.hamburger-nav-link:hover,
+.hamburger-nav-link:focus {
+    background: rgba(var(--bs-primary-rgb), 0.2);
+    border-color: rgba(var(--bs-primary-rgb), 0.4);
+    transform: translateX(-4px);
+    color: var(--bs-primary);
+}
+
+.hamburger-nav-link i {
+    font-size: 1.3rem;
+}
+
+.hamburger-menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hamburger-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-strong);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hamburger-action-btn:hover {
+    background: rgba(var(--bs-primary-rgb), 0.2);
+    border-color: rgba(var(--bs-primary-rgb), 0.4);
+}
+
+[dir="rtl"] .hamburger-nav-link:hover,
+[dir="rtl"] .hamburger-nav-link:focus {
+    transform: translateX(4px);
+}
+
+[dir="rtl"] .hamburger-close-btn {
+    left: auto;
+    right: 1.5rem;
+}
+
+/* Desktop navbar - show by default */
+.navbar-collapse {
+    display: flex !important;
+}
+
+/* Hide Bootstrap navbar toggler completely - we use custom hamburger menu */
+.navbar-toggler,
+.navbar-toggler-icon {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* Extra Large Devices (Large Desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+    
+    .hero-section {
+        min-height: 100vh;
+    }
+    
+    .section-padding {
+        padding-block: 7rem;
+    }
+}
+
+/* Large Devices (Desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .container {
+        max-width: 960px;
+    }
+    
+    .section-padding {
+        padding-block: 6rem;
+    }
+    
+    .section-title {
+        font-size: 2.4rem;
+    }
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    .hero-section {
+        min-height: auto;
+        padding-top: 6rem;
+        padding-bottom: 4rem;
+    }
+    
+    .section-padding {
+        padding-block: 5rem;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    .profile-card {
+        padding: 2rem;
+    }
+    
+    .highlight-card {
+        padding: 2rem;
+    }
+    
+    .skill-card {
+        padding: 1.75rem 1.5rem;
+    }
+    
+    .contact-card {
+        padding: 2.25rem;
+    }
+    
+    html {
+        scroll-padding-top: 70px;
+    }
+}
+
+/* Small Devices (Landscape Phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    /* Hide desktop navbar, show hamburger */
+    .navbar-collapse {
+        display: none !important;
+    }
+    
+    .hamburger-menu-btn {
+        display: flex;
+    }
+    
     .hamburger-menu-overlay {
         display: block;
     }
-
+    
     .navbar .navbar-brand {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
-
+    
+    .navbar .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
     .hero-section {
         min-height: auto;
-        padding-top: 7rem;
+        padding-top: 5rem;
+        padding-bottom: 3.5rem;
     }
-
+    
+    .hero-section .display-4 {
+        font-size: 2.25rem;
+    }
+    
+    .hero-section .lead {
+        font-size: 1.1rem;
+    }
+    
+    .section-padding {
+        padding-block: 4.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .floating-label {
+        padding: 0.45rem 1rem;
+        font-size: 0.9rem;
+    }
+    
     .profile-card {
         padding: 1.75rem;
+        border-radius: 24px;
     }
-}
-
-@media (max-width: 576px) {
-    .section-padding {
-        padding-block: 4rem;
+    
+    .profile-circle {
+        width: 110px;
+        height: 110px;
+        font-size: 2.3rem;
     }
-
+    
+    .highlight-card {
+        padding: 1.75rem;
+    }
+    
+    .skill-card {
+        padding: 1.5rem 1.25rem;
+    }
+    
+    .skill-card i {
+        font-size: 2.5rem !important;
+    }
+    
+    .portfolio-card {
+        border-radius: 16px;
+    }
+    
     .contact-card {
         padding: 2rem;
     }
+    
+    .contact-item {
+        padding: 0.9rem 1.1rem;
+        gap: 0.85rem;
+    }
+    
+    .contact-item .icon-wrap {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    html {
+        scroll-padding-top: 65px;
+    }
+    
+    body::before {
+        width: 600px;
+        height: 600px;
+    }
+    
+    body::after {
+        width: 700px;
+        height: 700px;
+    }
+}
 
-    .copy-toast {
-        left: 1.5rem;
-        right: 1.5rem;
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media (max-width: 575.98px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Hide desktop navbar, show hamburger */
+    .navbar-collapse {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+    }
+    
+    .hamburger-menu-btn {
+        display: flex;
+        width: 28px;
+        height: 20px;
+        position: relative;
+        z-index: 1050;
+    }
+    
+    .hamburger-menu-overlay {
+        display: block;
+    }
+    
+    .hamburger-line {
+        height: 2.5px;
+    }
+    
+    .navbar {
+        padding: 0.75rem 0;
+    }
+    
+    .navbar .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: 100%;
+    }
+    
+    .navbar .navbar-brand {
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    
+    .hero-section {
+        min-height: auto;
+        padding-top: 4.5rem;
+        padding-bottom: 3rem;
+    }
+    
+    .hero-section .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .hero-section .display-4 {
+        font-size: 1.75rem;
+        line-height: 1.3;
+        margin-bottom: 1.25rem;
+    }
+    
+    .hero-section .lead {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+    
+    .floating-label {
+        padding: 0.4rem 0.9rem;
+        font-size: 0.85rem;
+        margin-bottom: 1.25rem;
+        gap: 0.4rem;
+    }
+    
+    .floating-label i {
+        font-size: 0.9rem;
+    }
+    
+    .hero-section .d-flex.gap-3 {
+        flex-direction: column;
+        gap: 0.75rem !important;
+        width: 100%;
+    }
+    
+    .hero-section .btn {
+        width: 100%;
         justify-content: center;
+    }
+    
+    .hero-section .btn-lg {
+        padding: 0.7rem 1.25rem;
+        font-size: 0.95rem;
+    }
+    
+    .section-padding {
+        padding-block: 3.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+        line-height: 1.3;
+        margin-bottom: 1.25rem;
+    }
+    
+    .profile-card {
+        padding: 1.5rem;
+        border-radius: 20px;
+        gap: 1.25rem;
+    }
+    
+    .profile-circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 24px;
+        font-size: 2rem;
+    }
+    
+    .profile-text {
+        font-size: 0.95rem;
+    }
+    
+    .profile-text p {
+        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .highlight-card {
+        padding: 1.5rem;
+        border-radius: 16px;
+    }
+    
+    .highlight-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .highlight-card li {
+        margin-bottom: 1.25rem;
+    }
+    
+    .highlight-card i {
+        font-size: 1.3rem !important;
+        padding: 0.35rem 0.5rem;
+    }
+    
+    .highlight-card h4 {
+        font-size: 0.95rem;
+    }
+    
+    .highlight-card p {
+        font-size: 0.85rem;
+    }
+    
+    .skill-card {
+        padding: 1.5rem 1.25rem;
+        border-radius: 14px;
+    }
+    
+    .skill-card i {
+        font-size: 2.25rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .skill-card h3 {
+        font-size: 1.05rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .skill-card p {
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+    
+    .portfolio-card {
+        border-radius: 14px;
+    }
+    
+    .portfolio-card .card-body {
+        padding: 1.25rem;
+    }
+    
+    .portfolio-card .card-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .portfolio-card .card-text {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+    
+    .portfolio-card .badge {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.65rem;
+    }
+    
+    .contact-list {
+        gap: 0.75rem;
+    }
+    
+    .contact-item {
+        padding: 0.85rem 1rem;
+        gap: 0.75rem;
+        border-radius: 14px;
+    }
+    
+    .contact-item .icon-wrap {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+    }
+    
+    .contact-item .icon-wrap i {
+        font-size: 1.1rem;
+    }
+    
+    .contact-meta .label {
+        font-size: 0.75rem;
+    }
+    
+    .contact-meta .value {
+        font-size: 0.9rem;
+    }
+    
+    .contact-chip {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.65rem;
+    }
+    
+    .contact-card {
+        padding: 1.5rem;
+        border-radius: 14px;
+    }
+    
+    .contact-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-card p {
+        font-size: 0.9rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .contact-card .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .contact-card .form-control {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.9rem;
+        border-radius: 8px;
+    }
+    
+    .contact-card .btn {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+        border-radius: 8px;
+    }
+    
+    .btn-lg {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.95rem;
+    }
+    
+    .btn-sm {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    footer {
+        padding: 1.5rem 0;
+    }
+    
+    footer .container {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    footer .d-flex {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .copy-toast {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+        justify-content: center;
+        border-radius: 12px;
+    }
+    
+    html {
+        scroll-padding-top: 60px;
+    }
+    
+    body::before {
+        width: 500px;
+        height: 500px;
+        filter: blur(35px);
+    }
+    
+    body::after {
+        width: 600px;
+        height: 600px;
+        filter: blur(40px);
+    }
+    
+    .hero-section::after {
+        width: clamp(200px, 60vw, 400px);
+        filter: blur(50px);
+    }
+    
+    /* Text adjustments */
+    p, .text-body-secondary {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+    
+    small {
+        font-size: 0.8rem;
+    }
+    
+    /* Spacing adjustments */
+    .mb-4 {
+        margin-bottom: 1.25rem !important;
+    }
+    
+    .mb-5 {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .mt-3 {
+        margin-top: 1rem !important;
+    }
+    
+    .gap-3 {
+        gap: 0.75rem !important;
+    }
+    
+    .gap-4 {
+        gap: 1rem !important;
+    }
+    
+    .g-4 {
+        --bs-gutter-y: 1rem;
+        --bs-gutter-x: 1rem;
+    }
+    
+    .g-5 {
+        --bs-gutter-y: 1.25rem;
+        --bs-gutter-x: 1.25rem;
+    }
+}
+
+/* Ultra Small Devices (very small phones, less than 400px) */
+@media (max-width: 399.98px) {
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    .hero-section .display-4 {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .profile-card,
+    .highlight-card,
+    .contact-card {
+        padding: 1.25rem;
+    }
+    
+    .skill-card {
+        padding: 1.25rem 1rem;
+    }
+    
+    .contact-item {
+        padding: 0.75rem 0.9rem;
+    }
+    
+    .hamburger-menu-content {
+        padding: 4rem 1.5rem 1.5rem;
+    }
+    
+    .hamburger-nav-link {
+        padding: 0.9rem 1.25rem;
+        font-size: 1rem;
+    }
+    
+    .hamburger-action-btn {
+        padding: 0.9rem 1.25rem;
     }
 }
 
@@ -777,12 +1560,68 @@ footer {
     color: #121212;
 }
 
+[data-theme="dark"] .hamburger-menu-overlay {
+    background: rgba(10, 10, 15, 0.98);
+}
+
+[data-theme="dark"] .hamburger-close-btn {
+    background: rgba(var(--bs-primary-rgb), 0.2);
+    border-color: rgba(var(--bs-primary-rgb), 0.3);
+    color: var(--text-strong);
+}
+
+[data-theme="dark"] .hamburger-close-btn:hover {
+    background: rgba(var(--bs-primary-rgb), 0.3);
+}
+
+[data-theme="dark"] .hamburger-nav-link {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: var(--text-strong);
+}
+
+[data-theme="dark"] .hamburger-nav-link:hover,
+[data-theme="dark"] .hamburger-nav-link:focus {
+    background: rgba(var(--bs-primary-rgb), 0.25);
+    border-color: rgba(var(--bs-primary-rgb), 0.4);
+}
+
+[data-theme="dark"] .hamburger-action-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+    color: var(--text-strong);
+}
+
+[data-theme="dark"] .hamburger-action-btn:hover {
+    background: rgba(var(--bs-primary-rgb), 0.25);
+    border-color: rgba(var(--bs-primary-rgb), 0.4);
+}
+
+[data-theme="dark"] .hamburger-menu-actions {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
 /* Theme Toggle Button */
 .theme-toggle,
 .lang-toggle {
     border-radius: 8px;
     padding: 0.5rem 0.75rem;
     transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: auto;
+}
+
+.theme-toggle span,
+.lang-toggle span {
+    display: none !important;
+}
+
+.theme-toggle i,
+.lang-toggle i {
+    display: block !important;
+    margin: 0 !important;
 }
 
 .theme-toggle:hover,
