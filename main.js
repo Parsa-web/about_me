@@ -187,16 +187,20 @@ document.addEventListener('DOMContentLoaded', function () {
         yearSpan.textContent = new Date().getFullYear();
     }
 
-    // Navbar scroll effect and background animation
+    // Navbar scroll effect and background animation - Optimized with throttling
     const navbar = document.querySelector('.navbar');
     const body = document.body;
     
     if (navbar || body) {
-        window.addEventListener('scroll', () => {
+        let ticking = false;
+        let lastScrollY = 0;
+        
+        // Throttle function for better performance
+        function updateOnScroll() {
             const scrollY = window.scrollY;
             
-            // Navbar shadow
-            if (navbar) {
+            // Navbar shadow - only update if scroll position changed significantly
+            if (navbar && Math.abs(scrollY - lastScrollY) > 5) {
                 if (scrollY > 10) {
                     navbar.classList.add('shadow-sm');
                 } else {
@@ -214,18 +218,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 const scrollOpacity = Math.min(baseOpacity + (scrollProgress * 0.15), 0.95);
                 body.style.setProperty('--scroll-opacity', scrollOpacity.toString());
                 
-                // Move shapes with parallax effect - stronger movement for visibility
-                const scrollOffsetX1 = scrollProgress * 250;
-                const scrollOffsetY1 = scrollProgress * -200;
-                const scrollOffsetX2 = scrollProgress * -280;
-                const scrollOffsetY2 = scrollProgress * 230;
+                // Move shapes with parallax effect - reduced movement for better performance
+                const scrollOffsetX1 = scrollProgress * 200;
+                const scrollOffsetY1 = scrollProgress * -160;
+                const scrollOffsetX2 = scrollProgress * -220;
+                const scrollOffsetY2 = scrollProgress * 180;
                 
                 body.style.setProperty('--scroll-offset-x1', `${scrollOffsetX1}px`);
                 body.style.setProperty('--scroll-offset-y1', `${scrollOffsetY1}px`);
                 body.style.setProperty('--scroll-offset-x2', `${scrollOffsetX2}px`);
                 body.style.setProperty('--scroll-offset-y2', `${scrollOffsetY2}px`);
             }
+            
+            lastScrollY = scrollY;
+            ticking = false;
+        }
+        
+        // Use requestAnimationFrame for smooth scrolling
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(updateOnScroll);
+                ticking = true;
+            }
         }, { passive: true });
+        
+        // Initial call
+        updateOnScroll();
     }
 
     // Intersection Observer for scroll animations
